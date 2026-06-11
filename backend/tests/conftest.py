@@ -4,18 +4,13 @@ Provides test client and database setup for all tests.
 """
 
 import pytest
+import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from app.main import app
 from app.database.mongodb import MongoDB
 
 
-@pytest.fixture(scope="session")
-def anyio_backend():
-    """Configure anyio to use asyncio."""
-    return "asyncio"
-
-
-@pytest.fixture
+@pytest_asyncio.fixture
 async def client():
     """
     Async test client for making HTTP requests to the API.
