@@ -1,16 +1,24 @@
 """
 Tests for the Authentication module.
 Covers registration, login, profile retrieval, and logout.
+Uses unique usernames to avoid conflicts with existing data.
 """
 
 import pytest
+import uuid
+
+
+def unique_username(prefix: str = "test") -> str:
+    """Generate a unique username for testing."""
+    return f"{prefix}_{uuid.uuid4().hex[:8]}"
 
 
 @pytest.mark.asyncio
 async def test_register_user(client):
     """Test POST /api/auth/register - successful registration."""
+    username = unique_username("reg")
     payload = {
-        "username": "testuser",
+        "username": username,
         "password": "testpass123",
         "full_name": "Test User"
     }
@@ -18,7 +26,7 @@ async def test_register_user(client):
     
     assert response.status_code == 201
     data = response.json()
-    assert data["username"] == "testuser"
+    assert data["username"] == username
     assert data["full_name"] == "Test User"
     assert "id" in data
     assert "created_at" in data
@@ -28,8 +36,9 @@ async def test_register_user(client):
 @pytest.mark.asyncio
 async def test_register_duplicate_user(client):
     """Test POST /api/auth/register - duplicate username should fail."""
+    username = unique_username("dup")
     payload = {
-        "username": "duplicate",
+        "username": username,
         "password": "testpass123"
     }
     # First registration should succeed
@@ -45,16 +54,18 @@ async def test_register_duplicate_user(client):
 @pytest.mark.asyncio
 async def test_login_success(client):
     """Test POST /api/auth/login - successful authentication."""
+    username = unique_username("login")
+    
     # Register user first
     register_payload = {
-        "username": "loginuser",
+        "username": username,
         "password": "testpass123"
     }
     await client.post("/api/auth/register", json=register_payload)
     
     # Login
     login_payload = {
-        "username": "loginuser",
+        "username": username,
         "password": "testpass123"
     }
     response = await client.post("/api/auth/login", json=login_payload)
@@ -63,14 +74,14 @@ async def test_login_success(client):
     data = response.json()
     assert "access_token" in data
     assert data["token_type"] == "bearer"
-    assert data["user"]["username"] == "loginuser"
+    assert data["user"]["username"] == username
 
 
 @pytest.mark.asyncio
 async def test_login_invalid_credentials(client):
     """Test POST /api/auth/login - invalid credentials should fail."""
     payload = {
-        "username": "nonexistent",
+        "username": f"nonexistent_{uuid.uuid4().hex[:8]}",
         "password": "wrongpass"
     }
     response = await client.post("/api/auth/login", json=payload)
@@ -82,9 +93,11 @@ async def test_login_invalid_credentials(client):
 @pytest.mark.asyncio
 async def test_get_current_user(client):
     """Test GET /api/auth/me - retrieve authenticated user profile."""
+    username = unique_username("profile")
+    
     # Register and login
     register_payload = {
-        "username": "profileuser",
+        "username": username,
         "password": "testpass123",
         "full_name": "Profile User"
     }
@@ -92,7 +105,7 @@ async def test_get_current_user(client):
     
     login_response = await client.post(
         "/api/auth/login",
-        json={"username": "profileuser", "password": "testpass123"}
+        json={"username": username, "password": "testpass123"}
     )
     token = login_response.json()["access_token"]
     
@@ -104,7 +117,7 @@ async def test_get_current_user(client):
     
     assert response.status_code == 200
     data = response.json()
-    assert data["username"] == "profileuser"
+    assert data["username"] == username
     assert data["full_name"] == "Profile User"
 
 
@@ -122,16 +135,18 @@ async def test_get_current_user_invalid_token(client):
 @pytest.mark.asyncio
 async def test_logout(client):
     """Test DELETE /api/auth/logout - invalidate token."""
+    username = unique_username("logout")
+    
     # Register and login
     register_payload = {
-        "username": "logoutuser",
+        "username": username,
         "password": "testpass123"
     }
     await client.post("/api/auth/register", json=register_payload)
     
     login_response = await client.post(
         "/api/auth/login",
-        json={"username": "logoutuser", "password": "testpass123"}
+        json={"username": username, "password": "testpass123"}
     )
     token = login_response.json()["access_token"]
     

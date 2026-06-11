@@ -5,7 +5,7 @@ Implements Object-Oriented Programming (OOP) principles.
 """
 
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -51,7 +51,7 @@ class AuthController:
             "username": user_data.username,
             "full_name": user_data.full_name or user_data.username,
             "password": self.hash_password(user_data.password),
-            "created_at": datetime.utcnow(),
+            "created_at": datetime.now(timezone.utc),
         }
 
         # Insert into database
