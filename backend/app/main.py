@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database.mongodb import MongoDB, ping_database
-
+from app.routers import auth_routes
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -42,7 +42,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.include_router(auth_routes.router)
 
 @app.get(
     "/",

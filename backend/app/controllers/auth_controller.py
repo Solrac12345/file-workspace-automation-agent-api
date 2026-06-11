@@ -19,6 +19,7 @@ class AuthController:
     Controller class for Authentication module.
     Encapsulates password hashing, user creation, and in-memory token management.
     """
+    active_tokens: dict[str, dict] = {}
 
     def __init__(self, db: AsyncIOMotorDatabase):
         """Initialize controller with database connection and security context."""
@@ -26,9 +27,6 @@ class AuthController:
         self.collection = db.users
         # Context for hashing passwords securely using bcrypt
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        # In-memory token storage (as requested for simple token auth)
-        # Format: { "token_string": { "user_id": "...", "username": "..." } }
-        self.active_tokens: dict[str, dict] = {}
 
     def hash_password(self, password: str) -> str:
         """Hash a plain text password."""
