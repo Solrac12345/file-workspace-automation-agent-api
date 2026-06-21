@@ -34,13 +34,15 @@ class UserController:
         """Private method to transform MongoDB document to Pydantic model."""
         if not doc:
             return None
+        
+        # Use .get() with defaults to handle missing fields gracefully
         return UserResponse(
             id=str(doc["_id"]),
-            username=doc["username"],
-            email=doc["email"],
-            full_name=doc["full_name"],
+            username=doc.get("username", "unknown"),
+            email=doc.get("email", f"{doc.get('username', 'unknown')}@noemail.com"),
+            full_name=doc.get("full_name", doc.get("username", "Unknown User")),
             role=doc.get("role", "viewer"),
-            created_at=doc["created_at"],
+            created_at=doc.get("created_at", datetime.now(timezone.utc)),
             updated_at=doc.get("updated_at"),
         )
 
@@ -79,7 +81,9 @@ class UserController:
         cursor = self.collection.find({})
         users = []
         async for doc in cursor:
-            users.append(self._parse_user(doc))
+            user = self._parse_user(doc)
+            if user:  # Solo agregar si no es None
+                users.append(user)
         return users
 
     async def get_by_id(self, user_id: str) -> Optional[UserResponse]:
