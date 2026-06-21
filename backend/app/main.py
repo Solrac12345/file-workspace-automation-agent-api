@@ -12,6 +12,7 @@ from app.database.mongodb import MongoDB, ping_database
 from app.routers import auth_routes
 from app.routers import auth_routes, user_routes
 from app.routers import auth_routes, user_routes, service_routes
+from app.routers import auth_routes, user_routes, service_routes, product_routes
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -48,6 +49,7 @@ app.add_middleware(
 app.include_router(auth_routes.router)
 app.include_router(user_routes.router)
 app.include_router(service_routes.router)
+app.include_router(product_routes.router)
 
 @app.get(
     "/",
