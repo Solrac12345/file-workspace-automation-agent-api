@@ -37,13 +37,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configure CORS (will be refined in Phase 6)
+# CORS middleware configuration to allow frontend-backend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict to specific domains
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[
+        "http://localhost:5500",      # VSCode Live Server
+        "http://127.0.0.1:5500",      # Live Server alternative
+        "http://localhost:3000",      # Alternative dev port
+        "http://127.0.0.1:3000",      # Alternative dev port
+    ],
+    allow_credentials=True,           # Allow cookies and authentication headers
+    allow_methods=["*"],              # Allow all HTTP methods (GET, POST, PUT, DELETE)
+    allow_headers=["*"],              # Allow all headers (including X-Token)
+    expose_headers=["X-Token"],       # Expose custom header for token-based auth
 )
 
 app.include_router(auth_routes.router)
