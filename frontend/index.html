@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso — File & Workspace Automation Agent App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </span>
+        <span>Automation Agent</span>
+      </div>
+      <span class="badge">SENA · GA3</span>
+    </header>
+
+    <main class="glass-card">
+      <div class="card-header">
+        <h1>Acceso al workspace</h1>
+        <p>Organiza, sube y automatiza tus archivos desde un solo panel.</p>
+      </div>
+
+      <div class="feature-strip" aria-hidden="true">
+        <div class="feature-pill"><strong>Sync</strong>Estado en vivo</div>
+        <div class="feature-pill"><strong>Rules</strong>Reglas visuales</div>
+        <div class="feature-pill"><strong>Safe</strong>Historial local</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field">
+          <label for="usuario">Usuario</label>
+          <input id="usuario" type="text" placeholder="tu.usuario" autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="clave">Contraseña</label>
+          <input id="clave" type="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+      </div>
+
+      <button type="button" class="btn btn--primary" onclick="login()">Ingresar al workspace</button>
+    </main>
+
+    <footer class="page-footer">
+      Evidencia académica · File &amp; Workspace Automation Agent
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="js/api.js"></script>
+</body>
+</html>

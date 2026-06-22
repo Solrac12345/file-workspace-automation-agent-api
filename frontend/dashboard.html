@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace — Automation Agent</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell app-shell--wide">
+    <header class="top-bar top-bar--wide">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </span>
+        <span>Workspace</span>
+      </div>
+      <span class="badge">Activo</span>
+    </header>
+
+    <main class="glass-card glass-card--lg glass-card--stagger">
+      <div class="card-header card-header--left">
+        <h2>Tu espacio de trabajo</h2>
+        <p>Archivos recientes y acciones rápidas.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <span class="stat-card__value">3</span>
+          <span class="stat-card__label">Archivos en carpeta</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__value stat-card__value--status">Listo</span>
+          <span class="stat-card__label">Estado de automatización</span>
+        </div>
+
+        <section class="file-panel" aria-labelledby="files-heading">
+          <h3 id="files-heading" class="stat-card__label" style="margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Contenido</h3>
+          <ul class="file-list">
+            <li class="file-item">
+              <span class="file-item__icon file-item__icon--pdf" aria-hidden="true">📄</span>
+              <span class="file-item__name">reporte.pdf</span>
+              <span class="file-item__meta">PDF</span>
+            </li>
+            <li class="file-item">
+              <span class="file-item__icon file-item__icon--img" aria-hidden="true">🖼</span>
+              <span class="file-item__name">imagen.png</span>
+              <span class="file-item__meta">PNG</span>
+            </li>
+            <li class="file-item">
+              <span class="file-item__icon file-item__icon--xlsx" aria-hidden="true">📊</span>
+              <span class="file-item__name">datos.xlsx</span>
+              <span class="file-item__meta">XLSX</span>
+            </li>
+          </ul>
+
+          <div class="actions-block">
+            <button type="button" class="btn btn--secondary">Subir archivo</button>
+            <button type="button" class="btn btn--secondary">Crear workspace</button>
+            <button type="button" class="btn btn--primary" onclick="goAutomation()">Automatización</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer page-footer--wide">
+      <a href="index.html">Cerrar sesión (vista demo)</a>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

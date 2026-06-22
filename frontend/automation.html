@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatización — Automation Agent</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </span>
+        <span>Automation Agent</span>
+      </div>
+      <a href="dashboard.html" class="badge">← Workspace</a>
+    </header>
+
+    <main class="glass-card">
+      <div class="card-header">
+        <h1>Reglas de automatización</h1>
+        <p>Activa las opciones que quieras aplicar a los archivos del workspace.</p>
+      </div>
+
+      <div class="option-list">
+        <label class="option-row">
+          <span class="option-row__text">
+            Organizar archivos por tipo
+            <span class="option-row__hint">Crea subcarpetas por extensión (imágenes, documentos, etc.).</span>
+          </span>
+          <input type="checkbox" name="rule-type">
+        </label>
+        <label class="option-row">
+          <span class="option-row__text">
+            Mover archivos automáticamente
+            <span class="option-row__hint">Aplica reglas al detectar archivos nuevos.</span>
+          </span>
+          <input type="checkbox" name="rule-move">
+        </label>
+        <label class="option-row">
+          <span class="option-row__text">
+            Clasificar por fecha
+            <span class="option-row__hint">Agrupa por año y mes según la fecha de modificación.</span>
+          </span>
+          <input type="checkbox" name="rule-date">
+        </label>
+      </div>
+
+      <button type="button" class="btn btn--primary" onclick="save()">Activar automatización</button>
+    </main>
+
+    <footer class="page-footer">
+      Los cambios en esta demo se muestran con un mensaje de confirmación.
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
