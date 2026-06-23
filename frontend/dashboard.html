@@ -18,42 +18,43 @@
         </span>
         <span>Workspace</span>
       </div>
-      <span class="badge">Activo</span>
+      <!-- User info and logout button -->
+      <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
+        <span class="badge" id="userBadge">Cargando...</span>
+        <button type="button" class="btn btn--secondary" id="logoutBtn" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+          Cerrar sesión
+        </button>
+      </div>
     </header>
 
     <main class="glass-card glass-card--lg glass-card--stagger">
       <div class="card-header card-header--left">
         <h2>Tu espacio de trabajo</h2>
-        <p>Archivos recientes y acciones rápidas.</p>
+        <p id="welcomeMessage">Bienvenido al workspace.</p>
       </div>
 
       <div class="dashboard-grid">
+        <!-- Stats cards with dynamic data -->
         <div class="stat-card">
-          <span class="stat-card__value">3</span>
+          <span class="stat-card__value" id="fileCount">0</span>
           <span class="stat-card__label">Archivos en carpeta</span>
         </div>
         <div class="stat-card">
-          <span class="stat-card__value stat-card__value--status">Listo</span>
+          <span class="stat-card__value stat-card__value--status" id="automationStatus">Cargando...</span>
           <span class="stat-card__label">Estado de automatización</span>
         </div>
 
+        <!-- Files panel -->
         <section class="file-panel" aria-labelledby="files-heading">
-          <h3 id="files-heading" class="stat-card__label" style="margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Contenido</h3>
-          <ul class="file-list">
-            <li class="file-item">
-              <span class="file-item__icon file-item__icon--pdf" aria-hidden="true">📄</span>
-              <span class="file-item__name">reporte.pdf</span>
-              <span class="file-item__meta">PDF</span>
-            </li>
-            <li class="file-item">
-              <span class="file-item__icon file-item__icon--img" aria-hidden="true">🖼</span>
-              <span class="file-item__name">imagen.png</span>
-              <span class="file-item__meta">PNG</span>
-            </li>
-            <li class="file-item">
-              <span class="file-item__icon file-item__icon--xlsx" aria-hidden="true">📊</span>
-              <span class="file-item__name">datos.xlsx</span>
-              <span class="file-item__meta">XLSX</span>
+          <h3 id="files-heading" class="stat-card__label" style="margin-bottom: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">
+            Archivos Recientes
+          </h3>
+          <ul class="file-list" id="fileList">
+            <!-- Files will be loaded dynamically here -->
+            <li class="file-item" style="opacity: 0.5;">
+              <span class="file-item__icon" aria-hidden="true">⏳</span>
+              <span class="file-item__name">Cargando archivos...</span>
+              <span class="file-item__meta">—</span>
             </li>
           </ul>
 
@@ -67,10 +68,14 @@
     </main>
 
     <footer class="page-footer page-footer--wide">
-      <a href="index.html">Cerrar sesión (vista demo)</a>
+      Evidencia académica · File &amp; Workspace Automation Agent
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Load API module first -->
+  <script src="js/api.js"></script>
+  
+  <!-- Load dashboard logic -->
+  <script src="js/dashboard.js"></script>
 </body>
 </html>
