@@ -24,41 +24,82 @@
     <main class="glass-card">
       <div class="card-header">
         <h1>Reglas de automatización</h1>
-        <p>Activa las opciones que quieras aplicar a los archivos del workspace.</p>
+        <p>Gestiona las reglas que el agente aplicará a los archivos del workspace.</p>
       </div>
 
-      <div class="option-list">
-        <label class="option-row">
+      <!-- Form to create new rule -->
+      <section class="new-rule-section" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem;">
+        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Crear nueva regla</h3>
+        <form id="newRuleForm" style="display: grid; gap: 1rem;">
+          <div class="field">
+            <label for="ruleName">Nombre de la regla</label>
+            <input type="text" id="ruleName" placeholder="Ej: Mover PDFs a Contabilidad" required>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="field">
+              <label for="ruleFileType">Tipo de archivo</label>
+              <select id="ruleFileType" required>
+                <option value="pdf">PDF</option>
+                <option value="image">Imagen</option>
+                <option value="document">Documento</option>
+                <option value="spreadsheet">Hoja de cálculo</option>
+                <option value="presentation">Presentación</option>
+                <option value="archive">Archivo comprimido</option>
+                <option value="all">Todos</option>
+              </select>
+            </div>
+            
+            <div class="field">
+              <label for="ruleAction">Acción</label>
+              <select id="ruleAction" required>
+                <option value="move">Mover</option>
+                <option value="rename">Renombrar</option>
+                <option value="classify">Clasificar</option>
+                <option value="delete">Eliminar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ruleDestination">Carpeta destino</label>
+            <input type="text" id="ruleDestination" placeholder="/workspace/carpeta/" required>
+          </div>
+
+          <div class="field">
+            <label for="ruleDescription">Descripción (opcional)</label>
+            <input type="text" id="ruleDescription" placeholder="Descripción de lo que hace esta regla">
+          </div>
+
+          <button type="submit" class="btn btn--primary">Crear regla</button>
+        </form>
+      </section>
+
+      <!-- Dynamic rules list -->
+      <div class="option-list" id="rulesList">
+        <!-- Rules will be loaded dynamically here -->
+        <div class="option-row" style="opacity: 0.5;">
           <span class="option-row__text">
-            Organizar archivos por tipo
-            <span class="option-row__hint">Crea subcarpetas por extensión (imágenes, documentos, etc.).</span>
+            Cargando reglas...
+            <span class="option-row__hint">Conectando con la base de datos</span>
           </span>
-          <input type="checkbox" name="rule-type">
-        </label>
-        <label class="option-row">
-          <span class="option-row__text">
-            Mover archivos automáticamente
-            <span class="option-row__hint">Aplica reglas al detectar archivos nuevos.</span>
-          </span>
-          <input type="checkbox" name="rule-move">
-        </label>
-        <label class="option-row">
-          <span class="option-row__text">
-            Clasificar por fecha
-            <span class="option-row__hint">Agrupa por año y mes según la fecha de modificación.</span>
-          </span>
-          <input type="checkbox" name="rule-date">
-        </label>
+        </div>
       </div>
 
-      <button type="button" class="btn btn--primary" onclick="save()">Activar automatización</button>
+      <button type="button" class="btn btn--secondary" onclick="refreshRules()" style="margin-top: 1rem;">
+         Actualizar lista
+      </button>
     </main>
 
     <footer class="page-footer">
-      Los cambios en esta demo se muestran con un mensaje de confirmación.
+      Las reglas se guardan automáticamente en MongoDB Atlas.
     </footer>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Load API module first -->
+  <script src="js/api.js"></script>
+  
+  <!-- Load automation logic -->
+  <script src="js/automation.js"></script>
 </body>
 </html>
